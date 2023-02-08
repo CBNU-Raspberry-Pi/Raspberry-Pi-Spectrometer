@@ -6,13 +6,14 @@
 
 ## Raspberry Pi OS Download
 다운 받은 Raspberry Pi Imager를 열면 다음과 같은 화면이 나타나게 된다. 
-![Raspberry Pi Imger 화면](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20OS_1.png "Raspberry Pi Imger 화면")
+
+![Raspberry Pi Imger 화면](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20OS_1.png "Raspberry Pi Imger 화면") 
 
 **운영체제 선택** 버튼을 클릭한다. 그러면 다음과 같은 화면이 나타나게 된다.
 
 ![Raspberry Pi Imger 운영체제 선택 화면](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20OS_2.png "Raspberry Pi Imger 운영체제 선택 화면")
 
-가장 상단에 있는 **Raspberry Pi OS (32-bit)** 를 선택한다.
+가장 상단에 있는 **Raspberry Pi OS (32-bit)**를 선택한다. 
 
 (이 문서에서는 2022-09-22에 릴리즈된 OS를 사용하였음)
 
@@ -25,7 +26,7 @@
 
 ![Raspberry Pi Imger 주의 화면](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20OS_4.png "Raspberry Pi Imger 주의 화면")
 
-다음과 같은 화면이 나오면, **예** 를 누른 뒤 OS를 다운 받는다.
+다음과 같은 화면이 나오면, **예**를 누른 뒤 OS를 다운 받는다.
 
 (혹시 중요한 파일이 SD카드에 있는 경우 백업을 해두는 것이 좋음)
 
@@ -46,4 +47,30 @@ OS를 다운 받은 SD카드를 다음 위치에 방향을 맞추어 삽입한�
 
 
 # Raspberry Pi 초기 설정
+
+라즈베리파이를 키면 다음과 같은 화면이 나타난다. 
+
+다음의 방식으로 Raspberry Pi를 세팅한다. 
+
+![Raspberry Pi 화면_1](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_1.png)
+
+* **Next** 버튼을 누른다.
+
+![Raspberry Pi 화면_2](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_2.png)
+
+* **Use English language** 를 선택하고, **Next** 버튼을 누른다.
+
+![Raspberry Pi 화면_3](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_3.png)
+
+* username: **RaspberryPi**, password: **12345678**로 설정하고, **Next** 버튼을 누른다. (라즈베리파이는 동아리 소유의 물품이므로 **username과 password**를 통일함)
+
+![Raspberry Pi 화면_4](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_4.png)
+* **Next** 버튼을 누른다.
+
+![Raspberry Pi 화면_5](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_5.png)
+* 연결하고 싶은 와이파이를 선택하고, **Next**버튼을 누른다.
+* 인터넷 연결이 없으면, 카메라 모듈을 실행하기 위한 파일을 설치할 수 없다.
+
+![Raspberry Pi 화면_6](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_6.png)
+* **Next**버튼을 누른다.
 
