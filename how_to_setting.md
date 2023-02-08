@@ -125,6 +125,45 @@ OS를 다운 받은 SD카드를 다음 위치에 방향을 맞추어 삽입한�
    다음 명령어를 통해 지속적으로 카메라를 확인할 수 있다. 이를 끌 때는 ctrl+c를 터미널 창에 작성한다.
 
    
+## picamera2 및 Opencv 설치하기
 
+1. 다음을 터미널에서 실행하여 picamera2를 설치한다.
+
+       sudo apt install -y python3-libcamera python3-kms++
+       sudo apt install -y python3-pyqt5 python3-prctl libatlas-base-dev ffmpeg  python3-pip
+       pip3 install numpy --upgrade
+       pip3 install picamera2
+
+2. 다음을 터미널에서 실행하여 opencv를 다운 받는다.
    
+       sudo apt install -y python3-opencv
+       sudo apt install -y opencv-data
+       pip3 install tflite-runtime
 
+다음의 과정을 진행한 뒤 아래 코드를 실행한다. 이 코드는 github에 올려두었다.
+
+``` python
+import cv2
+from picamera2 import Picamera2
+
+cv2.startWindowThread()
+
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
+picam2.start()
+picam2.set_controls({"FrameDurationLimits": (33333, 33333)})
+# 상단의 코드는 프레임속도 조절 코드로 없으면 에러가 나온다. 주의 부탁!
+while True:
+    im = picam2.capture_array()
+    cv2.imshow("Camera", im)
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+        
+cv2.destroyAllWindows()
+
+``` 
+
+이때, 카메라 화면이 나타나지 않고 에러가 발생할 경우 **libcamera setting의 2. 라즈베리파이 설정하기** 부분을 다시 실행하도록 한다.
+
+**다시 문제가 발생할 경우 송다현 학생에게 연락부탁드립니다.**
