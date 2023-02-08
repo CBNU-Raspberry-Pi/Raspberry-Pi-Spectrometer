@@ -74,3 +74,51 @@ OS를 다운 받은 SD카드를 다음 위치에 방향을 맞추어 삽입한�
 ![Raspberry Pi 화면_6](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20Setup_6.png)
 * **Next**버튼을 누른다.
 
+# 카메라 모듈 실행을 위한 설정
+
+## libcamera setting
+1. OS 업데이트 및 업그레이드
+   
+   터미널에 다음 명령어를 작성하여, OS를 업데이트 및 업그레이드한다.
+   ```
+   sudo apt update
+   ```
+   ```
+   sudo apt full-upgrade
+   ```
+2. 라즈베리파이 설정하기
+   ```
+   sodo raspi-config
+   ```
+   ![Raspberry Pi config 화면_1](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20config_1.png)
+   * 다음 화면에서 **Advanced Options**를 선택한다.
+   * **Glamor**를 선택하여, glamor graphic을 활성화시킨다.
+   * 다시  **Advanced Options**를 선택한다.
+   * **GL Driver**를 선택한 뒤, **GL (Full KMS)** 선택한다.
+   * **Finish**를 선택하여, 라즈베리파이를 reboot한다.
+
+
+3. config.txt 변경
+   
+   * 터미널에 다음 명령어를 작성하여, config.txt 파일에 접근한다.
+     ```
+     sudo nano /boot/config.txt
+      ```
+   * 파일에서  "dtoverlay=vc4-kms-v3d"을 "dtoverlay=ov9281"로 변경한다.
+   * ctrol+x를 눌러 nano에서 벗어난다.
+   * 변경한 내용을 y를 눌러서 저장하고, enter를 누른다. 
+
+4. libcamera 실행하기
+   ```
+   libcamera-hello
+   ```
+   다음 명령어를 통해 5초 동안 카메라를 확인할 수 있다. 이때, 카메라 화면이 나타나지 않고 에러가 발생할 경우 **2. 라즈베리파이 설정하기** 부분을 다시 실행하도록한다.
+
+
+   ```
+   libcamera-hello -t 0
+   ```
+   다음 명령어를 통해 지속적으로 카메라를 확인할 수 있다. 이를 끌 때는 control+c를 터미널 창에 작성한다.
+
+   
+
