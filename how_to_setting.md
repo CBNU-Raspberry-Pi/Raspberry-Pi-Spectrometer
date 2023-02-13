@@ -88,7 +88,7 @@ OS를 다운 받은 SD카드를 다음 위치에 방향을 맞추어 삽입한�
    ```
 2. 라즈베리파이 설정하기
    ```
-   sodo raspi-config
+   sudo raspi-config
    ```
    ![Raspberry Pi config 화면_1](https://github.com/CBNU-Raspberry-Pi/Raspberry-Pi-Spectrometer/blob/main/setting%20img/Raspberry%20Pi%20config_1.png)
    * 다음 화면에서 **Advanced Options**를 선택한다.
