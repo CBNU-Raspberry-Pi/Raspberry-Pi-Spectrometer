@@ -3,6 +3,7 @@ import cv2
 import PIL.Image, PIL.ImageTk
 import time
 import graph_maker 
+import numpy as np
 
 class App:
 	def __init__(self, window, video_source=0):
@@ -31,7 +32,7 @@ class App:
 		bright_Label = tkinter.Label(self.window, text=' Set bright ', bg=self.from_rgb((225, 240, 200)), font=("Arial", 18))
 		bright_Label.place(x=640, y=400,height=40,width=640)
 
-		self.bright_scale = tkinter.Scale(self.window , from_=0, to=399, orient="horizontal")
+		self.bright_scale = tkinter.Scale(self.window , resolution = 0.1, from_=0, to=3.0, orient="horizontal")
 		self.bright_scale.place(x=640, y=440,height=40,width=640)
 
         # 이미지에서 X1 위치 변경
@@ -81,14 +82,11 @@ class App:
 		btn_frame.place(x=0, y=640, height=40, width=640)
 
 		## image/camera 전환 버튼
-		self.Change_btn=tkinter.Button(btn_frame, text="Camera",width=15, height=40, font=("Arial", 18), command=self.Change)
+		self.Change_btn=tkinter.Button(btn_frame, text="Camera",width=23, height=40, font=("Arial", 18), command=self.Change)
 		self.Change_btn.pack(side="left")
-		
-		## img 불러오기 버튼 
-
 
 		## capture 버튼
-		self.capture_btn=tkinter.Button(btn_frame, text="capture",width=15, height=40, font=("Arial", 18), command=self.snapshot)
+		self.capture_btn=tkinter.Button(btn_frame, text="capture",width=23, height=40, font=("Arial", 18), command=self.snapshot)
 		self.capture_btn.pack(side="left")
 
 		self.delay=50
@@ -100,13 +98,18 @@ class App:
 	def Change(self):
 		if self.Change_btn['text'] == "Camera":
 			self.Change_btn['text'] = "Image"
+			self.capture_btn['text'] = "image select"
+			self.fileName ="sample.png"
+			self.capture_btn['command'] = self.ask
 
 		else:
 			self.Change_btn['text'] = "Camera"
+			self.capture_btn['text'] = "capture"
+			self.capture_btn['command'] = self.snapshot
 
 	# 그래프 저장 
 	def save_graph(self):
-		cv2.imwrite(str(self.save_entry.get()) + ".jpg", cv2.cvtColor(self.graph, cv2.COLOR_RGB2BGR) )
+		cv2.imwrite("graph_image/"+str(self.save_entry.get()) + ".jpg", cv2.cvtColor(self.graph, cv2.COLOR_RGB2BGR) )
 
 
 	# 카메라 촬영
@@ -114,8 +117,14 @@ class App:
 		ret, frame=self.vid.get_frame()
 
 		if ret:
-			cv2.imwrite("frame-"+time.strftime("%d-%m-%Y-%H-%M-%S") + ".jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) )
+			cv2.imwrite("camera_image/"+time.strftime("%d-%m-%Y-%H-%M-%S") + ".jpg", cv2.cvtColor(frame, cv2.COLOR_RGB2BGR) )
 	
+	def ask(self):
+		self.window.file=tkinter.filedialog.askopenfile(initialdir='path', title='select file')
+		self.fileName = self.window.file.name
+
+
+	# 파장값 변환
 	def Change_WN(self):
 		if self.WN_x1_entry.get() or self.WN_x2_entry.get() != "":
 			interval = (int(self.WN_x2_entry.get())- int(self.WN_x1_entry.get()))/(self.x2_scale.get() - self.x1_scale.get())
@@ -126,10 +135,24 @@ class App:
 			self.WN_x2 = 750
 
 	def update(self):
-		ret, frame = self.vid.get_frame()
-		frame = cv2.resize(frame, (640,400) ,interpolation=cv2.INTER_AREA)
+
+		if self.Change_btn['text'] == "Camera":
+			ret, frame = self.vid.get_frame()
+			frame = cv2.resize(frame, (640,400) ,interpolation=cv2.INTER_AREA)
+		else:
+			frame = cv2.cvtColor(cv2.imread(self.fileName),cv2.COLOR_BGR2RGB) 
+			frame = cv2.resize(frame, (640,400) ,interpolation=cv2.INTER_AREA)
+
+		frame = np.clip((1+self.bright_scale.get()) * frame - 128 * self.bright_scale.get(), 0, 255).astype(np.uint8)
+
+		# 그래프 업데이트 
 		gray_image= cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 		flux = gray_image[int(self.y_scale.get()),:]
+		gragh_maker = graph_maker.make_graph()
+		self.graph = gragh_maker.make_image(self.WN_x1, self.WN_x2, flux)
+		self.graph = cv2.resize(self.graph, (640,400) ,interpolation=cv2.INTER_AREA)
+		self.graph_img = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(self.graph))
+		self.canvas_2.create_image(0,0, image=self.graph_img, anchor=tkinter.NW)
 		
 		# 카메라 이미지 편집 
 		white = (255,255,255)
@@ -140,13 +163,6 @@ class App:
 		# 카메라 이미지 업데이트 
 		self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
 		self.canvas_1.create_image(0,0, image=self.photo, anchor=tkinter.NW)
-
-		# 그래프 업데이트 
-		gragh_maker = graph_maker.make_graph()
-		self.graph = gragh_maker.make_image(self.WN_x1, self.WN_x2, flux)
-		self.graph = cv2.resize(self.graph, (640,400) ,interpolation=cv2.INTER_AREA)
-		self.graph_img = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(self.graph))
-		self.canvas_2.create_image(0,0, image=self.graph_img, anchor=tkinter.NW)
 
 		self.window.after(self.delay, self.update)
 
