@@ -59,12 +59,6 @@ select_img = 1
 
 
 i = np.zeros((0,400,1),dtype=np.uint8) # for i in range(400): nmnm.append(i)
-
-
-LAY = Label(win, text='  ',bg='#50E0F0') ## X1 위치조절 추가박스
-LAY.place(x=1, y=430,height=40,width=400)
-
-
 qqw = Label(win, text='',bg='#ADFAFA') ## 위치조절박스
 qqw.place(x=403, y=395,height=40,width=400)
 
