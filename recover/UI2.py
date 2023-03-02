@@ -71,11 +71,14 @@ class App:
 		self.WN_x2 = 750
 
 		## save 버튼
+		WN_x2_Label = tkinter.Label(self.window, text=' Save Graph ', bg=self.from_rgb((225, 240, 200)), font=("Arial", 18))
+		WN_x2_Label.place(x=640, y=600,height=40,width=640)
+
 		self.save_entry = tkinter.Entry(self.window, font=("Arial", 18))
-		self.save_entry.place(x=640, y=600,height=40,width=780)
+		self.save_entry.place(x=640, y=640,height=40,width=780)
 
 		self.btn_save=tkinter.Button(self.window, text="save",width=15, height=40, font=("Arial", 18), command=self.save_graph)
-		self.btn_save.place(x=1140, y=600,height=40,width=140)
+		self.btn_save.place(x=1140, y=640,height=40,width=140)
 
 		# 좌측 하단 버튼 프레임
 		btn_frame = tkinter.Frame(self.window) 
