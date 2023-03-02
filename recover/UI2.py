@@ -54,14 +54,14 @@ class App:
 		WN_x1_Label = tkinter.Label(self.window, text=' Wave number x1 ', bg=self.from_rgb((225, 240, 200)), font=("Arial", 18))
 		WN_x1_Label.place(x=640, y=480,height=40,width=320)
 
-		self.WN_x1_entry = tkinter.Entry(self.window, font=("Arial", 18))
+		self.WN_x1_entry = tkinter.Entry(self.window, font=("Arial", 18), justify= "center")
 		self.WN_x1_entry.place(x=640, y=520,height=40,width=320)
 
 		## x2 wave number 설정
 		WN_x2_Label = tkinter.Label(self.window, text=' Wave number x1 ', bg=self.from_rgb((225, 240, 200)), font=("Arial", 18))
 		WN_x2_Label.place(x=960, y=480,height=40,width=320)
 
-		self.WN_x2_entry = tkinter.Entry(self.window, font=("Arial", 18))
+		self.WN_x2_entry = tkinter.Entry(self.window, font=("Arial", 18), justify= "center")
 		self.WN_x2_entry.place(x=960, y=520,height=40,width=320)
 
 		self.WN_btn = tkinter.Button(self.window, text="wavenumber set", width=15, height=40, font=("Arial", 18), command=self.Change_WN)
